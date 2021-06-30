@@ -1,14 +1,9 @@
 import json
 import requests
-import reverse_geocoder as rg
 import base as bs
 
+#Instacia de la clase base donde tenemos los metodos de la logica del manejo de datos
 bs = bs.Base()
 
-#acceso al servicio web del metrobus
-r = requests.get('https://datos.cdmx.gob.mx/api/3/action/datastore_search?resource_id=ad360a0e-b42f-482c-af12-1fd72140032e&limit=5')
-metrobusJson = r.json()
-result = metrobusJson['result']
-records = result['records']
-
-bs.insert_metrobus_data(records)
+#Proceso que inserta registros de la consulta del metrobus y busca su alcaldia en base a las coordenadas dadas.
+bs.insert_metrobus_data()
