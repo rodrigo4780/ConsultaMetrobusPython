@@ -1,13 +1,14 @@
 from django.db import models
 
-
+#Modelo de alcaldia 
 class Alcaldia(models.Model):
     name = models.CharField(max_length=300, blank=True)
 
     def __str__(self):
-        return "{}".format(self.name)
+        return "{}-{}".format(self.name, self.id)
 
 
+#Modelo de MetrobusData que es el que se obtiene de la consulta del api de metrobus
 class MetrobusData(models.Model):
     id_data = models.IntegerField(blank=True, null=True)
     id_alcaldia = models.ForeignKey(Alcaldia, on_delete=models.CASCADE, blank=True, null=True)
