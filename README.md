@@ -9,7 +9,7 @@ _en una base de datos Postgresql para posteriormente exponer un Servicio GraphQl
 
 _Diagrama con el diseño de la solución_
 
-_Script python  que consulta API Metrobus y Obtiene alcaldia en base a coordenadas de_
+_Script python (consultaunidades.py)  que consulta API Metrobus y Obtiene alcaldia en base a coordenadas de_
 _cada registro, el cual inserta en la base de datos._
 
 _Se crea App consulta_metrobus en el proyecto para el_
