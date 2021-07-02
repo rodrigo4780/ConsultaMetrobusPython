@@ -15,8 +15,8 @@ class Base():
         self.DATABASE_NAME = os.getenv('DATABASE_NAME', 'postgres')
         self.DATABASE_USERNAME =  os.getenv('DATABASE_USERNAME', 'postgres')
         self.DATABASE_PASSWORD = os.getenv('DATABASE_PASSWORD', 'localdb')
-        self.DATABASE_HOST = os.getenv('DATABASE_HOST', '127.0.0.1')
-        self.DATABASE_PORT = os.getenv('DATABASE_PORT', 5434)
+        self.DATABASE_HOST = os.getenv('HOSTBASE', 'localhost')
+        self.DATABASE_PORT = os.getenv('DATABASE_PORT', 5432)
 
     #Función para la creación de la conexión.
     def connection(self):

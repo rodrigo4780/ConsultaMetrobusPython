@@ -16,6 +16,8 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+HOSTDB = os.environ.setdefault('ENV_FILE', '.env.local')
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -89,8 +91,9 @@ DATABASES = {
         'NAME': 'postgres',
         'USER': 'postgres',
         'PASSWORD': 'localdb',
-        'HOST': '172.17.0.2',
+        #'HOST': '172.17.0.2',
         #'HOST': 'localhost',
+        'HOST': os.environ.setdefault('HOSTBASE', 'localhost'),
         'PORT': '5432',
         'CONN_MAX_AGE': 36000,
         'OPTIONS': {

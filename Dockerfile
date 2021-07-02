@@ -12,6 +12,7 @@ COPY ApiMetrobus /app
 WORKDIR /app
 ENV VIRTUAL_ENV /env
 ENV PATH /env/bin:$PATH
+ENV HOSTBASE 172.17.0.2
 EXPOSE 8080
 
 #CMD ["python", "manage.py", "runserver", "8080"]
