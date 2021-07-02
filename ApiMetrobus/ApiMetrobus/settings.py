@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +26,7 @@ SECRET_KEY = 'django-insecure-xjir=3m#b#)jao@wd&z$f0ixei50njvcv%y2*@*qmx8_ru9&9e
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -88,8 +89,9 @@ DATABASES = {
         'NAME': 'postgres',
         'USER': 'postgres',
         'PASSWORD': 'localdb',
-        'HOST': 'localhost',
-        'PORT': '5434',
+        'HOST': '172.17.0.2',
+        #'HOST': 'localhost',
+        'PORT': '5432',
         'CONN_MAX_AGE': 36000,
         'OPTIONS': {
             'connect_timeout': 30,
@@ -134,7 +136,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
+STATIC_LOCATION = 'static'
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage' # default
 STATIC_URL = '/static/'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
