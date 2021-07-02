@@ -91,9 +91,7 @@ DATABASES = {
         'NAME': 'postgres',
         'USER': 'postgres',
         'PASSWORD': 'localdb',
-        #'HOST': '172.17.0.2',
-        #'HOST': 'localhost',
-        'HOST': os.environ.setdefault('HOSTBASE', 'localhost'),
+        'HOST': os.environ.setdefault('HOSTBASE', 'localhost'), 
         'PORT': '5432',
         'CONN_MAX_AGE': 36000,
         'OPTIONS': {
