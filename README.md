@@ -12,7 +12,7 @@ _Diagrama con el diseño de la solución_
 _Script python  que consulta API Metrobus y Obtiene alcaldia en base a coordenadas de_
 _cada registro, el cual inserta en la base de datos._
 
-_Se crea App consulta_metrobus en el proyecto para el _
+_Se crea App consulta_metrobus en el proyecto para el_
 _API Graphql que entrega las consultas solicitadas._
 
 _Se crea el archivo Dockerfile para empaquetar el servicio._
