@@ -7,13 +7,14 @@ _en una base de datos Postgresql para posteriormente exponer un Servicio GraphQl
 
 _Para completar la prueba tecnica se realizo lo siguiente:_
 
-_ Diagrama con el diseño de la solución_
-_ Script python  que consulta API Metrobus y Obtiene alcaldia en base a coordenadas de_
+_Diagrama con el diseño de la solución_
+
+_Script python  que consulta API Metrobus y Obtiene alcaldia en base a coordenadas de_
 _       cada registro, el cual inserta en la base de datos._
-_ Se crea App consulta_metrobus en el proyecto para el _
+_Se crea App consulta_metrobus en el proyecto para el _
 _       API Graphql que entrega las consultas solicitadas._
-_ Se crea el archivo Dockerfile para empaquetar el servicio._
-_ Se crea dentro del App consulta_metrobus las respectivas pruebas unitarias.(tests.py)_
+_Se crea el archivo Dockerfile para empaquetar el servicio._
+_Se crea dentro del App consulta_metrobus las respectivas pruebas unitarias.(tests.py)_
 
 
 ## Construido Con:
