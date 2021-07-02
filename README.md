@@ -24,72 +24,125 @@ _Se ocupo Git para el versionado del proyecto._
 
 ### Diagrama del dise�o de la soluci�n.
 
-_Dentro del proyecto en raiz se encuentra el archivo "Diagrama Proyecto Metrobus.jpg" donde se encuantra el diagrama de la solución._
+_Dentro del proyecto en raiz se encuentra el archivo "Diagrama Metrobus.JPG" donde se encuantra el diagrama de la solución._
 
 ### Descarga del proyecto 
 
 _Se proporciona la liga para la descarga del proyecto_
 
 ```
-git clone https://github.com/rodrigo4780/ConsultaMetrobus.git
+git clone https://github.com/rodrigo4780/ConsultaMetrobusPython.git
 ```
 ### Montar Base de datos Postgresql
 
-_Se corren los siguientes comandos para montar la base de datos._
-_El archivo Dockerfilebase del proyecto trae la configuracion para correr el script de la Base de datos_
+_Se corren el siguiente comando para montar la base de datos._
 
 ```
-docker build -t postgresmetrobus -f Dockerfilebase .
-docker run --name base -d -p 5432:5432 postgresmetrobus
+docker run -d --rm --name metrobus -e POSTGRES_PASSWORD=localdb -p 5432:5432 postgres
 ```
 
 _Se necesita correr el siguiente comando para ver la ip que se asigno al docker_
 _Esto es iportante ya que si nos da una ip distinta a la 172.17.0.2 se tiene que sustituir esta ip_
-_por el obtenido en la inspecci�n en los comandos siguientes donde aparezca el host._
+_por el obtenido en la inspección en el archivo dockerfile en la variable de ambiente HOSTBASE._
 
 ```
 docker inspect base
 ```
 
-### Montar proceso de consulta
+### Proceso de consulta y llenado a la base de datos.
 
-_Este proceso monta el docker que consulta el API de Ubicacion de unidades del metros_
-_e inserta los registros en la base de datos, el proceso despues de iniciado corre cada hora_
+_En los pasos siguientes pasos se consulta el API de Ubicacion de unidades del metros_
+_e inserta los registros en la base de datos_
 _Correr los siguientes comandos:_
 
+_Descargar el codigo:_
+
 ```
-docker build -t consultametrobus -f Dockerfile2 .
-docker run -d -e host=172.17.0.2 --name consulta consultametrobus
+git clone https://github.com/rodrigo4780/ConsultaMetrobusPython.git
 ```
 
-### Montar Servicio API rest
+_Crear ambiente de python:_
 
-_Se implementa el API que permite consultar la informaci�n almacenada_
+```
+python -m venv env
+```
+_Una vez creado al ambiente corremos el archivo "Activate"_
+_A continuación se instalan las librerias necesarias_
+
+```
+pip install -r requirements.txt
+```
+
+
+_Nos cambiamos a la ruta del proyecto dentro de la carpeta ApiMetroubus_ 
+_al nivel del archivo manage.py y corremos los siguientes comandos:_
+
+```
+python manage.py migrate
+python consultaunidades.py
+```
+Estos comandos crean la estructura de la BD
+y el script de python que consulta el API de metrobus y guarda los registros
+
+
+### Montar Servicio Graphql
+
+_Se implementa el API GraphQL que permite consultar la informaci�n almacenada_
 _Correr los comandos:_
 
 ```
 docker build -t serviciometrobus .
-docker run -d -p 80:80 -e host=172.17.0.2 --name servicio serviciometrobus
+docker run -d -p 8080:8080 --name servicio serviciometrobus
 ```
 
-_Una ves montado el API podemos hacer la llamada de la siguiente manera:_
+_Una ves montado el Docker podemos hacer la llamada desde la siguiente liga:_
 
-_Obtener una lista de las unidades disponibles._
 ```
-http://localhost/api/unidades/get
-```
-
-_Obtener el historial de las ubicaciones/fechas de una unidad dado su id._
-```
-http://localhost/api/unidades/get/497
+http://localhost:8080/graphql/
 ```
 
-_Obtener una lista de alcaldias disponibles._
+_Dentro corremos los siguientes querys para las consultas solicitadas:_
+
+
+_Query para obtener las unidades disponibles._
 ```
-http://localhost/api/alcaldias/get
+query {
+  unidadesDisponibles {
+    vehicleId
+  }
+}
 ```
 
-_Obtener una lista de unidades que hayan estado dentro de una alcaldia._
+_Query para obtener el historial de las ubicaciones/fechas de una unidad dado su id._
 ```
-http://localhost/api/alcaldias/get/17
+query{
+  ubicacionesUnidad(unidadId:24){
+    idAlcaldia{
+      name
+    }
+    dateUpdated
+  }
+}
+```
+
+_Query para obtener una lista de alcaldias disponibles._
+```
+query{
+  allAlcaldias{
+    id
+    name
+  }
+}
+```
+
+_Query para obtener una lista de unidades que hayan estado dentro de una alcaldia._
+```
+query{
+  unidadesAlcaldia(alcaldiaId:2){
+    vehicleId
+    idAlcaldia{
+      name
+    }
+  }
+}
 ```
